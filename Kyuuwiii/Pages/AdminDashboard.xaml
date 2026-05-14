@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kyuuwiii.Pages.AdminDashboard"
+             Style="{StaticResource PageStyle}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0" BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
+                Padding="20,52,20,20">
+            <Grid>
+                <VerticalStackLayout HorizontalOptions="Start">
+                    <Label Text="Kyuuwiii Admin" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="System Management" TextColor="#AABBDD" FontSize="12" />
+                </VerticalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="End" Spacing="12">
+                    <Button Text="Log Out" BackgroundColor="#2A3C8E" TextColor="White"
+                            FontSize="12" HeightRequest="36" CornerRadius="10" Padding="12,0"
+                            Clicked="OnLogoutClicked" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,24" Spacing="16">
+
+                <!-- Queue Overview -->
+                <Label Text="Enrollment Overview" Style="{StaticResource HeadingStyle}" />
+                <Label Text="Real-time management of academic enrollment flows across departments."
+                       Style="{StaticResource SubheadingStyle}" Margin="0,0,0,8" />
+
+                <CollectionView x:Name="QueueOverviewList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <!-- Placeholder — replaced via code -->
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Courses Cards -->
+                <VerticalStackLayout x:Name="CourseCardsContainer" Spacing="12" />
+
+                <!-- Users section -->
+                <Label Text="User Management" Style="{StaticResource HeadingStyle}"
+                       FontSize="22" Margin="0,8,0,0" />
+
+                <!-- Search + Add -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <Border Style="{StaticResource InputBorderStyle}" Grid.Column="0" Margin="0">
+                        <Entry x:Name="SearchEntry" Placeholder="Search users…"
+                               BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}"
+                               PlaceholderColor="{StaticResource TextMuted}" FontSize="14"
+                               VerticalOptions="Center"
+                               TextChanged="OnSearchChanged" />
+                    </Border>
+                    <Button Grid.Column="1" Text="+ Add User"
+                            BackgroundColor="{StaticResource Accent}" TextColor="White"
+                            FontSize="13" HeightRequest="52" CornerRadius="12" Padding="14,0"
+                            Clicked="OnAddUserClicked" />
+                </Grid>
+
+                <!-- User list -->
+                <CollectionView x:Name="UserList" SelectionMode="Single"
+                                SelectionChanged="OnUserSelected">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,10">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <!-- Avatar -->
+                                    <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceVariant}"
+                                            StrokeThickness="0" HeightRequest="44" WidthRequest="44"
+                                            Margin="0,0,14,0" VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="22" />
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding Initials}"
+                                               TextColor="{StaticResource Accent}" FontSize="16" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <!-- Info -->
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding username}"
+                                               TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" />
+                                        <Label Text="{Binding email}"
+                                               TextColor="{StaticResource TextSecondary}" FontSize="12" />
+                                        <Label Text="{Binding RoleDisplay}"
+                                               TextColor="{StaticResource Accent}" FontSize="11" FontAttributes="Bold" />
+                                    </VerticalStackLayout>
+                                    <!-- ID -->
+                                    <Label Grid.Column="2" Text="{Binding studentId}"
+                                           TextColor="{StaticResource TextMuted}" FontSize="11"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

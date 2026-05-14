@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kyuuwiii.Pages.ManagerDashboard"
+             Style="{StaticResource PageStyle}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0" BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
+                Padding="20,52,20,20">
+            <Grid>
+                <VerticalStackLayout HorizontalOptions="Start">
+                    <Label Text="EduQueue CS/IT" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label x:Name="ManagerSubLabel" Text="Manager View"
+                           TextColor="#AABBDD" FontSize="12" />
+                </VerticalStackLayout>
+                <Border HorizontalOptions="End" VerticalOptions="Center"
+                        BackgroundColor="#2A3C8E" StrokeThickness="0"
+                        HeightRequest="38" WidthRequest="38">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="19" />
+                    </Border.StrokeShape>
+                    <Label x:Name="AvatarLabel" Text="M" TextColor="White"
+                           FontSize="15" FontAttributes="Bold"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,24" Spacing="16">
+
+                <!-- Tab selector -->
+                <Border Style="{StaticResource CardStyle}" Padding="6">
+                    <Grid x:Name="TabGrid" ColumnDefinitions="*,*,*,*">
+                        <Border x:Name="TabCS" Grid.Column="0" BackgroundColor="{StaticResource Primary}"
+                                StrokeThickness="0" Padding="8,6">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Label Text="CS" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                   HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="0" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Border>
+                        <Border x:Name="TabIT" Grid.Column="1" BackgroundColor="Transparent"
+                                StrokeThickness="0" Padding="8,6">
+                            <Label Text="IT" TextColor="{StaticResource TextSecondary}" FontSize="13"
+                                   HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Border>
+                        <Border x:Name="TabIS" Grid.Column="2" BackgroundColor="Transparent"
+                                StrokeThickness="0" Padding="8,6">
+                            <Label Text="IS" TextColor="{StaticResource TextSecondary}" FontSize="13"
+                                   HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="2" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Border>
+                        <Border x:Name="TabDS" Grid.Column="3" BackgroundColor="Transparent"
+                                StrokeThickness="0" Padding="8,6">
+                            <Label Text="DS" TextColor="{StaticResource TextSecondary}" FontSize="13"
+                                   HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="3" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Queue Title + Status -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                    <Label x:Name="QueueTitleLabel" Text="CS Enrollment Queue"
+                           Style="{StaticResource HeadingStyle}" FontSize="24" />
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource StatusActive}"
+                            StrokeThickness="0" Padding="10,5" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Label Text="● Active" TextColor="White" FontSize="12" FontAttributes="Bold" />
+                    </Border>
+                </Grid>
+
+                <!-- Now Serving Card -->
+                <Border BackgroundColor="{StaticResource Primary}" StrokeThickness="0" Padding="20,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                            <Label Text="NOW SERVING" TextColor="#AABBDD" FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="1" />
+                            <Border Grid.Column="1" BackgroundColor="#2A3C8E"
+                                    StrokeThickness="0" Padding="8,4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label x:Name="ServingTicketLabel" Text="–"
+                                       TextColor="White" FontSize="12" FontAttributes="Bold" />
+                            </Border>
+                        </Grid>
+
+                        <HorizontalStackLayout Spacing="14">
+                            <Border BackgroundColor="#2A3C8E" StrokeThickness="0"
+                                    HeightRequest="50" WidthRequest="50">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="25" />
+                                </Border.StrokeShape>
+                                <Label x:Name="ServingInitials" Text="–" TextColor="White"
+                                       FontSize="18" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="ServingNameLabel" Text="No one serving"
+                                       TextColor="White" FontSize="18" FontAttributes="Bold" />
+                                <Label x:Name="ServingIdLabel" Text="–"
+                                       TextColor="#AABBDD" FontSize="13" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Border BackgroundColor="#FFFFFF20" StrokeThickness="0"
+                                Padding="14,10" Margin="0,16,0,16">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="⏱" TextColor="White" FontSize="14" />
+                                <Label Text="Time in Queue" TextColor="White" FontSize="14" />
+                                <Label x:Name="ServingTimeLabel" Text="–"
+                                       TextColor="White" FontSize="14" FontAttributes="Bold"
+                                       HorizontalOptions="EndAndExpand" />
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0" Text="▶  Call Next"
+                                    BackgroundColor="{StaticResource Accent}"
+                                    TextColor="White" FontAttributes="Bold"
+                                    HeightRequest="48" CornerRadius="12"
+                                    Clicked="OnCallNextClicked" />
+                            <Button Grid.Column="1" Text="✔  Mark Done"
+                                    BackgroundColor="#2A3C8E"
+                                    TextColor="White" FontAttributes="Bold"
+                                    HeightRequest="48" CornerRadius="12"
+                                    Clicked="OnMarkDoneClicked" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Stats row -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="16">
+                        <VerticalStackLayout>
+                            <Label Text="QUEUE LENGTH" Style="{StaticResource LabelStyle}" FontSize="10" />
+                            <Label x:Name="QueueLengthLabel" Text="–"
+                                   TextColor="{StaticResource Primary}"
+                                   FontSize="26" FontAttributes="Bold" />
+                            <Label Text="Students" TextColor="{StaticResource TextSecondary}" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="16">
+                        <VerticalStackLayout>
+                            <Label Text="AVG. WAIT" Style="{StaticResource LabelStyle}" FontSize="10" />
+                            <Label Text="08 min"
+                                   TextColor="{StaticResource Accent}"
+                                   FontSize="26" FontAttributes="Bold" />
+                            <Label Text="Per student" TextColor="{StaticResource TextSecondary}" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Queue list -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+                            <Label Text="Up Next" Style="{StaticResource HeadingStyle}" FontSize="22" />
+                            <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceVariant}"
+                                    StrokeThickness="0" Padding="14,8" VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="🔍" FontSize="13" />
+                                    <Label Text="Search ID or Name" TextColor="{StaticResource TextMuted}" FontSize="13" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <CollectionView x:Name="QueueList" ItemsSource="{Binding QueueItems}"
+                                        HeightRequest="400">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,10"
+                                          RowDefinitions="Auto">
+                                        <!-- Position badge -->
+                                        <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceVariant}"
+                                                StrokeThickness="0" HeightRequest="36" WidthRequest="36"
+                                                Margin="0,0,14,0" VerticalOptions="Center">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="18" />
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding DisplayPosition}"
+                                                   TextColor="{StaticResource Accent}"
+                                                   FontSize="14" FontAttributes="Bold"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <!-- Info -->
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding StudentName}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15" FontAttributes="Bold" />
+                                            <Label Text="{Binding Reason}"
+                                                   TextColor="{StaticResource TextSecondary}" FontSize="12" />
+                                        </VerticalStackLayout>
+                                        <!-- ID -->
+                                        <Label Grid.Column="2" Text="{Binding StudentId}"
+                                               TextColor="{StaticResource TextMuted}"
+                                               FontSize="12" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Nav -->
+        <Border Grid.Row="2" BackgroundColor="{StaticResource Surface}"
+                StrokeThickness="0" Padding="0,12,0,28">
+            <Grid ColumnDefinitions="*,*">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4">
+                    <Label Text="📋" FontSize="22" HorizontalOptions="Center"
+                           TextColor="{StaticResource TextMuted}" />
+                    <Label Text="My Status" FontSize="11"
+                           TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="4">
+                    <Label Text="☰" FontSize="22" HorizontalOptions="Center" />
+                    <Label Text="Queues" FontSize="11" FontAttributes="Bold"
+                           TextColor="{StaticResource Accent}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

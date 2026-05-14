@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kyuuwiii.Pages.StudentDashboard"
+             Style="{StaticResource PageStyle}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0" BackgroundColor="{StaticResource Surface}" StrokeThickness="0"
+                Padding="20,52,20,16">
+            <Grid>
+                <HorizontalStackLayout HorizontalOptions="Start" Spacing="10" VerticalOptions="Center">
+                    <Border BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
+                            HeightRequest="28" WidthRequest="28">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="6" />
+                        </Border.StrokeShape>
+                        <Label Text="K" TextColor="White" FontSize="16" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Kyuuwiii" TextColor="{StaticResource TextPrimary}"
+                           FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Border HorizontalOptions="End" VerticalOptions="Center"
+                        BackgroundColor="{StaticResource SurfaceVariant}"
+                        StrokeThickness="0" HeightRequest="36" WidthRequest="36">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18" />
+                    </Border.StrokeShape>
+                    <Label x:Name="AvatarLabel" Text="?" TextColor="{StaticResource Accent}"
+                           FontSize="14" FontAttributes="Bold"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,24" Spacing="16">
+
+                <!-- Hero Card -->
+                <Border Style="{StaticResource CardStyle}" Padding="28,32">
+                    <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+
+                        <!-- Icon circle -->
+                        <Border BackgroundColor="{StaticResource AccentMint}" StrokeThickness="0"
+                                HeightRequest="80" WidthRequest="80"
+                                HorizontalOptions="Center" Margin="0,0,0,24">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="40" />
+                            </Border.StrokeShape>
+                            <Label Text="👤" FontSize="34"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+
+                        <Label Text="Ready to enroll?" Style="{StaticResource HeadingStyle}"
+                               HorizontalTextAlignment="Center" Margin="0,0,0,10" />
+                        <Label Text="Join the Admissions &amp; Enrollment Office virtual queue to save your spot and avoid waiting in line."
+                               Style="{StaticResource SubheadingStyle}"
+                               HorizontalTextAlignment="Center" Margin="0,0,0,28" />
+
+                        <!-- Queue Title -->
+                        <Label Text="QUEUE TITLE" Style="{StaticResource LabelStyle}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Entry x:Name="TitleEntry"
+                                   Placeholder="e.g., Computer Science Enrollment"
+                                   BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}"
+                                   PlaceholderColor="{StaticResource TextMuted}" FontSize="15" VerticalOptions="Center" />
+                        </Border>
+
+                        <!-- Description -->
+                        <Label Text="DESCRIPTION" Style="{StaticResource LabelStyle}" />
+                        <Border Style="{StaticResource InputBorderStyle}" HeightRequest="90" Padding="16,8">
+                            <Editor x:Name="DescriptionEditor"
+                                    Placeholder="e.g., Join this queue for manual course adding"
+                                    BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}"
+                                    PlaceholderColor="{StaticResource TextMuted}" FontSize="15"
+                                    AutoSize="TextChanges" />
+                        </Border>
+
+                        <Label x:Name="ErrorLabel" TextColor="{StaticResource DangerColor}"
+                               FontSize="13" IsVisible="False" Margin="0,0,0,8" HorizontalOptions="Center" />
+
+                        <Button Text="→  Join Enrollment Queue"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Clicked="OnJoinQueueClicked"
+                                Margin="0,12,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Current Office Status -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="Current Office Status"
+                               TextColor="{StaticResource TextPrimary}"
+                               FontSize="20" FontAttributes="Bold" />
+
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="16">
+                            <!-- People waiting -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="👥"
+                                   FontSize="22" VerticalOptions="Center" Margin="0,0,12,0" />
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                <Label x:Name="TotalWaitingLabel" Text="–"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       FontSize="20" FontAttributes="Bold" />
+                                <Label Text="Currently waiting" Style="{StaticResource SubheadingStyle}" FontSize="13" />
+                            </VerticalStackLayout>
+
+                            <!-- Avg time -->
+                            <Label Grid.Row="1" Grid.Column="0" Text="⏱"
+                                   FontSize="22" VerticalOptions="Center" Margin="0,0,12,0" />
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                                <Label x:Name="AvgTimeLabel" Text="–"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       FontSize="20" FontAttributes="Bold" />
+                                <Label Text="Est. service time per person" Style="{StaticResource SubheadingStyle}" FontSize="13" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Nav -->
+        <Border Grid.Row="2" BackgroundColor="{StaticResource Surface}"
+                StrokeThickness="0" Padding="0,12,0,28">
+            <Border.Shadow>
+                <Shadow Brush="#1A000000" Offset="0,-2" Radius="8" Opacity="0.1" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,*">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4">
+                    <Label Text="📋" FontSize="22" HorizontalOptions="Center" />
+                    <Label Text="My Status" FontSize="11" FontAttributes="Bold"
+                           TextColor="{StaticResource Accent}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="4">
+                    <Label Text="☰" FontSize="22" HorizontalOptions="Center"
+                           TextColor="{StaticResource TextMuted}" />
+                    <Label Text="Queues" FontSize="11"
+                           TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

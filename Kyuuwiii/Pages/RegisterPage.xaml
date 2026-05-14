@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Kyuuwiii.Pages.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    Style="{StaticResource PageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,48,28,40" Spacing="0">
+
+            <!--  Logo Header  -->
+            <HorizontalStackLayout Margin="0,0,0,32" HorizontalOptions="Start">
+                <Border
+                    Margin="0,0,10,0"
+                    BackgroundColor="{StaticResource Primary}"
+                    HeightRequest="32"
+                    StrokeThickness="0"
+                    WidthRequest="32">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="7" />
+                    </Border.StrokeShape>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        Text="K"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </Border>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Kyuuwiii"
+                    TextColor="{StaticResource TextPrimary}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!--  Card  -->
+            <Border Padding="28,32" Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="0">
+
+                    <Label
+                        Margin="0,0,0,6"
+                        Style="{StaticResource HeadingStyle}"
+                        Text="Create Account" />
+                    <Label
+                        Margin="0,0,0,28"
+                        Style="{StaticResource SubheadingStyle}"
+                        Text="Start your enrollment process today." />
+
+                    <!--  Full Name  -->
+                    <Label Style="{StaticResource LabelStyle}" Text="FULL NAME" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry
+                            x:Name="FullNameEntry"
+                            BackgroundColor="Transparent"
+                            FontSize="15"
+                            Placeholder="John Doe"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            VerticalOptions="Center" />
+                    </Border>
+
+                    <!--  Student ID  -->
+                    <Label Style="{StaticResource LabelStyle}" Text="STUDENT ID NUMBER" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry
+                            x:Name="StudentIdEntry"
+                            BackgroundColor="Transparent"
+                            FontSize="15"
+                            Placeholder="2024-00000"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            VerticalOptions="Center" />
+                    </Border>
+
+                    <!--  Email  -->
+                    <Label Style="{StaticResource LabelStyle}" Text="UNIVERSITY EMAIL" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry
+                            x:Name="EmailEntry"
+                            BackgroundColor="Transparent"
+                            FontSize="15"
+                            Keyboard="Email"
+                            Placeholder="username@university.edu"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            VerticalOptions="Center" />
+                    </Border>
+
+                    <!--  Course Picker  -->
+                    <Label Style="{StaticResource LabelStyle}" Text="DEPARTMENT / PROGRAM" />
+                    <Border Padding="12,0" Style="{StaticResource InputBorderStyle}">
+                        <Picker
+                            x:Name="CoursePicker"
+                            Title="Select your department"
+                            BackgroundColor="Transparent"
+                            FontSize="15"
+                            TextColor="{StaticResource TextPrimary}"
+                            TitleColor="{StaticResource TextMuted}"
+                            VerticalOptions="Center">
+                            <Picker.Items>
+                                <x:String>Computer Science</x:String>
+                                <x:String>Information Technology</x:String>
+                                <x:String>Data Science</x:String>
+                                <x:String>Information Systems</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
+
+                    <!--  Password  -->
+                    <Label
+                        Margin="0,4,0,0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="PASSWORD" />
+                    <Border Margin="0,4,0,28" Style="{StaticResource InputBorderStyle}">
+                        <Entry
+                            x:Name="PasswordEntry"
+                            BackgroundColor="Transparent"
+                            FontSize="15"
+                            IsPassword="True"
+                            Placeholder="••••••••"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            VerticalOptions="Center" />
+                    </Border>
+
+                    <Label
+                        x:Name="ErrorLabel"
+                        Margin="0,0,0,12"
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        IsVisible="False"
+                        TextColor="{StaticResource DangerColor}" />
+
+                    <Button
+                        Clicked="OnSignUpClicked"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Text="Sign Up" />
+
+                    <HorizontalStackLayout
+                        Margin="0,20,0,0"
+                        HorizontalOptions="Center"
+                        Spacing="6">
+                        <Label
+                            FontSize="14"
+                            Text="Already have an account?"
+                            TextColor="{StaticResource TextSecondary}" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            Text="Log In"
+                            TextColor="{StaticResource Accent}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLoginTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                Margin="0,24,0,0"
+                FontSize="11"
+                HorizontalTextAlignment="Center"
+                Text="By signing up, you agree to Kyuuwiii's terms of service and privacy policy for academic data handling."
+                TextColor="{StaticResource TextMuted}" />
+
+            <Label
+                Margin="0,8,0,0"
+                FontSize="11"
+                HorizontalTextAlignment="Center"
+                Text="© 2024 Kyuuwiii Enrollment Systems. All rights reserved."
+                TextColor="{StaticResource TextMuted}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

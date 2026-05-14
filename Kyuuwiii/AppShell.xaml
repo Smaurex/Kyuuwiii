@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:Kyuuwiii.Pages"
+       x:Class="Kyuuwiii.AppShell"
+       Shell.NavBarIsVisible="False">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Shell" ApplyToDerivedTypes="True">
+                <Setter Property="Shell.BackgroundColor" Value="#0D1B5E" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.NavBarHasShadow" Value="False" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- Default route — always start at Login -->
+    <ShellContent x:Name="LoginContent"
+                  Route="LoginPage"
+                  ContentTemplate="{DataTemplate pages:LoginPage}" />
+
+    <ShellContent Route="StudentDashboard"
+                  ContentTemplate="{DataTemplate pages:StudentDashboard}" />
+
+    <ShellContent Route="QueueStatusPage"
+                  ContentTemplate="{DataTemplate pages:QueueStatusPage}" />
+
+    <ShellContent Route="ManagerDashboard"
+                  ContentTemplate="{DataTemplate pages:ManagerDashboard}" />
+
+    <ShellContent Route="AdminDashboard"
+                  ContentTemplate="{DataTemplate pages:AdminDashboard}" />
+
+</Shell>

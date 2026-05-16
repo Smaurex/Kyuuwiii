@@ -20,7 +20,7 @@
                         <Label Text="K" TextColor="White" FontSize="16" FontAttributes="Bold"
                                HorizontalOptions="Center" VerticalOptions="Center" />
                     </Border>
-                    <Label Text="Kyuuwiii" TextColor="{StaticResource TextPrimary}"
+                    <Label Text="Kyuwii" TextColor="{StaticResource TextPrimary}"
                            FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                 </HorizontalStackLayout>
 

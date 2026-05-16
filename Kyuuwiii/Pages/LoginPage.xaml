@@ -21,18 +21,13 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalOptions="Center"
-                        Text="K"
-                        TextColor="White"
-                        VerticalOptions="Center" />
+                    <Image Source="kyuwii_logo.png" 
+                           />
                 </Border>
                 <Label
                     FontAttributes="Bold"
                     FontSize="22"
-                    Text="Kyuuwiii"
+                    Text="Kyuwii"
                     TextColor="{StaticResource TextPrimary}"
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
@@ -58,7 +53,7 @@
                             BackgroundColor="Transparent"
                             FontSize="15"
                             Keyboard="Email"
-                            Placeholder="e.g. 2024-0001"
+                            Placeholder="e.g. 2410xxxx"
                             PlaceholderColor="{StaticResource TextMuted}"
                             TextColor="{StaticResource TextPrimary}"
                             VerticalOptions="Center" />

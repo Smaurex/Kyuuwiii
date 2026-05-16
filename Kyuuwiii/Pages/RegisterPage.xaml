@@ -20,18 +20,13 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="7" />
                     </Border.StrokeShape>
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="18"
-                        HorizontalOptions="Center"
-                        Text="K"
-                        TextColor="White"
-                        VerticalOptions="Center" />
+                    <Image Source="kyuwii_logo.png" 
+                           />
                 </Border>
                 <Label
                     FontAttributes="Bold"
                     FontSize="20"
-                    Text="Kyuuwiii"
+                    Text="Kyuwii"
                     TextColor="{StaticResource TextPrimary}"
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
@@ -69,7 +64,7 @@
                             x:Name="StudentIdEntry"
                             BackgroundColor="Transparent"
                             FontSize="15"
-                            Placeholder="2024-00000"
+                            Placeholder="2410XXXX"
                             PlaceholderColor="{StaticResource TextMuted}"
                             TextColor="{StaticResource TextPrimary}"
                             VerticalOptions="Center" />
@@ -83,7 +78,7 @@
                             BackgroundColor="Transparent"
                             FontSize="15"
                             Keyboard="Email"
-                            Placeholder="username@university.edu"
+                            Placeholder="id_num@usc.edu.ph"
                             PlaceholderColor="{StaticResource TextMuted}"
                             TextColor="{StaticResource TextPrimary}"
                             VerticalOptions="Center" />
@@ -165,14 +160,14 @@
                 Margin="0,24,0,0"
                 FontSize="11"
                 HorizontalTextAlignment="Center"
-                Text="By signing up, you agree to Kyuuwiii's terms of service and privacy policy for academic data handling."
+                Text="By signing up, you agree to Kyuwii's terms of service and privacy policy for academic data handling."
                 TextColor="{StaticResource TextMuted}" />
 
             <Label
                 Margin="0,8,0,0"
                 FontSize="11"
                 HorizontalTextAlignment="Center"
-                Text="© 2024 Kyuuwiii Enrollment Systems. All rights reserved."
+                Text="© 2024 Kyuwii Enrollment Systems. All rights reserved."
                 TextColor="{StaticResource TextMuted}" />
 
         </VerticalStackLayout>

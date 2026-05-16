@@ -12,7 +12,7 @@
                 Padding="20,52,20,20">
             <Grid>
                 <VerticalStackLayout HorizontalOptions="Start">
-                    <Label Text="Kyuuwiii Admin" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Kyuwii Admin" TextColor="White" FontSize="18" FontAttributes="Bold" />
                     <Label Text="System Management" TextColor="#AABBDD" FontSize="12" />
                 </VerticalStackLayout>
                 <HorizontalStackLayout HorizontalOptions="End" Spacing="12">

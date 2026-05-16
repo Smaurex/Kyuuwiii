@@ -12,7 +12,7 @@
                 Padding="20,52,20,20">
             <Grid>
                 <VerticalStackLayout HorizontalOptions="Start">
-                    <Label Text="EduQueue CS/IT" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Enrollment Queue IT/CS/IS/DS" TextColor="White" FontSize="18" FontAttributes="Bold" />
                     <Label x:Name="ManagerSubLabel" Text="Manager View"
                            TextColor="#AABBDD" FontSize="12" />
                 </VerticalStackLayout>

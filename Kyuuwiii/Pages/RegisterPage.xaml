@@ -42,7 +42,7 @@
                     <Label
                         Margin="0,0,0,28"
                         Style="{StaticResource SubheadingStyle}"
-                        Text="Start your enrollment process today." />
+                        Text="Join the enrollment queue today." />
 
                     <!--  Full Name  -->
                     <Label Style="{StaticResource LabelStyle}" Text="FULL NAME" />

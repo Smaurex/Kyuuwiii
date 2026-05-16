@@ -135,7 +135,7 @@
                 Spacing="16">
                 <Label
                     FontSize="12"
-                    Text="University Registration System"
+                    Text="Department Enrollment Queue"
                     TextColor="{StaticResource TextMuted}" />
             </HorizontalStackLayout>
 

@@ -81,15 +81,15 @@
                                     </Border>
                                     <!-- Info -->
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="{Binding username}"
+                                        <Label Text="{Binding FullName}"
                                                TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" />
-                                        <Label Text="{Binding email}"
+                                        <Label Text="{Binding Email}"
                                                TextColor="{StaticResource TextSecondary}" FontSize="12" />
                                         <Label Text="{Binding RoleDisplay}"
                                                TextColor="{StaticResource Accent}" FontSize="11" FontAttributes="Bold" />
                                     </VerticalStackLayout>
                                     <!-- ID -->
-                                    <Label Grid.Column="2" Text="{Binding studentId}"
+                                    <Label Grid.Column="2" Text="{Binding StudentId}"
                                            TextColor="{StaticResource TextMuted}" FontSize="11"
                                            VerticalOptions="Center" />
                                 </Grid>

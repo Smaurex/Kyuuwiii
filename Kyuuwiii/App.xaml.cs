@@ -12,7 +12,10 @@ public partial class App : Application
         Task.Run(async () =>
             await DatabaseService.Instance.InitAsync()
         ).Wait();
+    }
 
-        MainPage = new AppShell();
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
     }
 }

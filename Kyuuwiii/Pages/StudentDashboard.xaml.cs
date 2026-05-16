@@ -72,4 +72,12 @@ public partial class StudentDashboard : ContentPage
         ErrorLabel.Text = message;
         ErrorLabel.IsVisible = true;
     }
+
+    private async void OnAvatarTapped(object sender, TappedEventArgs e)
+    {
+        bool confirm = await DisplayAlertAsync("Log Out", "Are you sure you want to log out?", "Log Out", "Cancel");
+        if (!confirm) return;
+        Session.Logout();
+        AppShell.NavigateToLogin();
+    }
 }

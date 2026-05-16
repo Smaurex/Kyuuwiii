@@ -1,17 +1,40 @@
 using Kyuuwiii.Models;
 using Kyuuwiii.Services;
-using Microsoft.Maui.Controls.Shapes;
 
 namespace Kyuuwiii.Pages;
 
-public class UserViewModel : User
+// ── Fully separate ViewModel — does NOT inherit User so SQLite never touches it ──
+public class UserViewModel
 {
-    public string Initials => (firstName.Length > 0 ? firstName[0].ToString() : "?").ToUpper();
-    public string RoleDisplay => user_role.ToUpper();
+    public int UserId { get; set; }
+    public string FullName { get; set; } = "";
+    public string Email { get; set; } = "";
+    public string StudentId { get; set; } = "";
+    public string Course { get; set; } = "";
+    public string Role { get; set; } = "";
+
+    // Display helpers
+    public string Initials => FullName.Length > 0 ? FullName[0].ToString().ToUpper() : "?";
+    public string RoleDisplay => Role.ToUpper();
+
+    // Convert back to a plain User for DB operations
+    public User ToUser(string firstName, string lastName, string password) => new()
+    {
+        userId = UserId,
+        firstName = firstName,
+        lastName = lastName,
+        email = Email,
+        studentId = StudentId,
+        course = Course,
+        password = password,
+        user_role = Role
+    };
 }
 
 public partial class AdminDashboard : ContentPage
 {
+    // Keep the original User objects around so we can pass them to the DB without losing fields
+    private List<User> _rawUsers = new();
     private List<UserViewModel> _allUsers = new();
 
     public AdminDashboard()
@@ -39,10 +62,9 @@ public partial class AdminDashboard : ContentPage
         for (int i = 0; i < courses.Count; i++)
         {
             var c = courses[i];
-            int idx = i;
-            string status = idx < statusLabels.Length ? statusLabels[idx] : "Active";
-            string color = idx < statusColors.Length ? statusColors[idx] : "#22C55E";
-            string avg = idx < avgTimes.Length ? avgTimes[idx] : "–";
+            string status = i < statusLabels.Length ? statusLabels[i] : "Active";
+            string color = i < statusColors.Length ? statusColors[i] : "#22C55E";
+            string avg = i < avgTimes.Length ? avgTimes[i] : "–";
 
             var card = new Border
             {
@@ -50,8 +72,16 @@ public partial class AdminDashboard : ContentPage
                 Padding = new Thickness(20, 16)
             };
 
-            // Left accent bar
-            var grid = new Grid { ColumnDefinitions = { new ColumnDefinition(new GridLength(4)), new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Auto) } };
+            var grid = new Grid
+            {
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition(new GridLength(4)),
+                    new ColumnDefinition(GridLength.Star),
+                    new ColumnDefinition(GridLength.Auto)
+                }
+            };
+
             var bar = new BoxView { Color = Color.FromArgb(color), WidthRequest = 4, CornerRadius = 2 };
             Grid.SetColumn(bar, 0);
 
@@ -66,7 +96,8 @@ public partial class AdminDashboard : ContentPage
             var avgStack = new VerticalStackLayout();
             avgStack.Add(new Label { Text = "AVG. TIME", FontSize = 10, TextColor = Color.FromArgb("#6B7280") });
             avgStack.Add(new Label { Text = avg, FontSize = 22, FontAttributes = FontAttributes.Bold, TextColor = Color.FromArgb("#1A7A5C") });
-            stats.Add(waitStack); stats.Add(avgStack);
+            stats.Add(waitStack);
+            stats.Add(avgStack);
             info.Add(stats);
             info.Add(new Label { Text = $"👤 Coordinator: {c.courseCardCoordinator}", FontSize = 12, TextColor = Color.FromArgb("#6B7280") });
 
@@ -75,10 +106,9 @@ public partial class AdminDashboard : ContentPage
                 BackgroundColor = Color.FromArgb(color),
                 StrokeThickness = 0,
                 Padding = new Thickness(10, 4),
-                VerticalOptions = LayoutOptions.Start,
-                StrokeShape = new Rectangle { RadiusX = 20, RadiusY = 20 }
+                VerticalOptions = LayoutOptions.Start
             };
-            badge.StrokeShape = new Rectangle { RadiusX = 20, RadiusY = 20 };
+            badge.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(20) };
             badge.Content = new Label { Text = status, TextColor = Colors.White, FontSize = 11, FontAttributes = FontAttributes.Bold };
 
             Grid.SetColumn(info, 1);
@@ -91,17 +121,17 @@ public partial class AdminDashboard : ContentPage
 
     private async Task LoadUsers(string filter = "")
     {
-        var users = await DatabaseService.Instance.GetAllUsersAsync();
-        _allUsers = users.Select(u => new UserViewModel
+        // Always re-fetch raw User objects from DB
+        _rawUsers = await DatabaseService.Instance.GetAllUsersAsync();
+
+        _allUsers = _rawUsers.Select(u => new UserViewModel
         {
-            userId = u.userId,
-            firstName = u.firstName,
-            lastName = u.lastName,
-            studentId = u.studentId,
-            email = u.email,
-            password = u.password,
-            course = u.course,
-            user_role = u.user_role
+            UserId = u.userId,
+            FullName = u.username,
+            Email = u.email,
+            StudentId = u.studentId,
+            Course = u.course,
+            Role = u.user_role
         }).ToList();
 
         ApplyFilter(filter);
@@ -112,10 +142,13 @@ public partial class AdminDashboard : ContentPage
         var filtered = string.IsNullOrWhiteSpace(filter)
             ? _allUsers
             : _allUsers.Where(u =>
-                u.username.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
-                u.email.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
-                u.studentId.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+                u.FullName.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
+                u.Email.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
+                u.StudentId.Contains(filter, StringComparison.OrdinalIgnoreCase)
+              ).ToList();
 
+        // Null then reassign forces CollectionView to fully re-render
+        UserList.ItemsSource = null;
         UserList.ItemsSource = filtered;
     }
 
@@ -126,24 +159,45 @@ public partial class AdminDashboard : ContentPage
 
     private async void OnUserSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is not UserViewModel user) return;
+        if (e.CurrentSelection.FirstOrDefault() is not UserViewModel vm) return;
         ((CollectionView)sender).SelectedItem = null;
 
-        string action = await DisplayActionSheet(
-            $"Manage: {user.username}", "Cancel", "Delete User",
+        // Find the original plain User object — never pass UserViewModel to SQLite
+        var original = _rawUsers.FirstOrDefault(u => u.userId == vm.UserId);
+        if (original == null) return;
+
+        string action = await DisplayActionSheetAsync(
+            $"Manage: {vm.FullName}", "Cancel", "Delete User",
             "Set as Student", "Set as Manager", "Set as Admin");
 
         switch (action)
         {
-            case "Set as Student": user.user_role = "user"; await DatabaseService.Instance.UpdateUserAsync(user); break;
-            case "Set as Manager": user.user_role = "manager"; await DatabaseService.Instance.UpdateUserAsync(user); break;
-            case "Set as Admin": user.user_role = "admin"; await DatabaseService.Instance.UpdateUserAsync(user); break;
-            case "Delete User":
-                bool confirm = await DisplayAlert("Delete", $"Delete {user.username}?", "Delete", "Cancel");
-                if (confirm) await DatabaseService.Instance.DeleteUserAsync(user);
+            case "Set as Student":
+                original.user_role = "user";
+                await DatabaseService.Instance.UpdateUserAsync(original);
                 break;
+
+            case "Set as Manager":
+                original.user_role = "manager";
+                await DatabaseService.Instance.UpdateUserAsync(original);
+                break;
+
+            case "Set as Admin":
+                original.user_role = "admin";
+                await DatabaseService.Instance.UpdateUserAsync(original);
+                break;
+
+            case "Delete User":
+                bool confirm = await DisplayAlertAsync("Delete", $"Delete {vm.FullName}?", "Delete", "Cancel");
+                if (!confirm) return;
+                await DatabaseService.Instance.DeleteUserAsync(original);
+                break;
+
+            default:
+                return; // Cancel or dismissed — don't reload
         }
 
+        // Reload from DB to reflect real saved state
         await LoadUsers(SearchEntry.Text ?? "");
     }
 
@@ -152,9 +206,9 @@ public partial class AdminDashboard : ContentPage
         await Shell.Current.GoToAsync("RegisterPage");
     }
 
-    private async void OnLogoutClicked(object sender, EventArgs e)
+    private void OnLogoutClicked(object sender, EventArgs e)
     {
         Session.Logout();
-        await Shell.Current.GoToAsync("//LoginPage");
+        AppShell.NavigateToLogin();
     }
 }

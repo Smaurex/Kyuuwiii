@@ -123,13 +123,13 @@ public partial class ManagerDashboard : ContentPage
         var course = _courses[_selectedCourseIndex];
         bool advanced = await DatabaseService.Instance.CallNextAsync(course.courseId);
         if (!advanced)
-            await DisplayAlert("Queue Empty", "No more students waiting in this queue.", "OK");
+            await DisplayAlertAsync("Queue Empty", "No more students waiting in this queue.", "OK");
         await LoadQueue();
     }
 
     private async void OnMarkDoneClicked(object sender, EventArgs e)
     {
-        if (_servingEntry == null) { await DisplayAlert("No Active", "No student is currently being served.", "OK"); return; }
+        if (_servingEntry == null) { await DisplayAlertAsync("No Active", "No student is currently being served.", "OK"); return; }
         await DatabaseService.Instance.MarkDoneAsync(_servingEntry.entryId);
         await LoadQueue();
     }
@@ -141,5 +141,14 @@ public partial class ManagerDashboard : ContentPage
             _selectedCourseIndex = idx;
             await LoadQueue();
         }
+    }
+
+    private void OnLogoutClicked(object sender, EventArgs e)
+    {
+        _timer?.Stop();
+        _timer?.Dispose();
+        _timer = null;
+        Session.Logout();
+        AppShell.NavigateToLogin();
     }
 }

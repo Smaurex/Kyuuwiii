@@ -63,7 +63,7 @@ public partial class QueueStatusPage : ContentPage
             // Done — navigate back to dashboard
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await DisplayAlert("Queue Complete", "You have been served. Thank you!", "OK");
+                await DisplayAlertAsync("Queue Complete", "You have been served. Thank you!", "OK");
                 await Shell.Current.GoToAsync("//StudentDashboard");
             });
             return;
@@ -112,7 +112,7 @@ public partial class QueueStatusPage : ContentPage
 
     private async void OnLeaveQueueClicked(object sender, EventArgs e)
     {
-        bool confirm = await DisplayAlert("Leave Queue",
+        bool confirm = await DisplayAlertAsync("Leave Queue",
             "Are you sure you want to leave the queue? You will lose your spot.", "Yes, Leave", "Cancel");
         if (!confirm) return;
 
@@ -123,5 +123,13 @@ public partial class QueueStatusPage : ContentPage
 
         StopTimer();
         await Shell.Current.GoToAsync("//StudentDashboard");
+    }
+
+    private async void OnAvatarTapped(object sender, TappedEventArgs e)
+    {
+        bool confirm = await DisplayAlertAsync("Log Out", "Are you sure you want to log out?", "Log Out", "Cancel");
+        if (!confirm) return;
+        Session.Logout();
+        AppShell.NavigateToLogin();
     }
 }

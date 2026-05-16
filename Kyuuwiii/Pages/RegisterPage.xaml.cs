@@ -48,7 +48,7 @@ public partial class RegisterPage : ContentPage
             return;
         }
 
-        await DisplayAlert("Success", "Account created! You can now log in.", "Continue");
+        await DisplayAlertAsync("Success", "Account created! You can now log in.", "Continue");
         await Shell.Current.GoToAsync("//LoginPage");
     }
 

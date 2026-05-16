@@ -55,7 +55,7 @@ public partial class LoginPage : ContentPage
 
     private void OnForgotTapped(object sender, EventArgs e)
     {
-        DisplayAlert("Forgot Password", "Please contact your department administrator to reset your password.", "OK");
+        DisplayAlertAsync("Forgot Password", "Please contact your department administrator to reset your password.", "OK");
     }
 
     private void ShowError(string message)

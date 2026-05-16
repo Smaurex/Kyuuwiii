@@ -240,7 +240,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Bottom Nav -->
+        <!-- Bottom Nav (obsolete)
         <Border Grid.Row="2" BackgroundColor="{StaticResource Surface}"
                 StrokeThickness="0" Padding="0,12,0,28">
             <Grid ColumnDefinitions="*,*">
@@ -257,6 +257,6 @@
                 </VerticalStackLayout>
             </Grid>
         </Border>
-
+        -->
     </Grid>
 </ContentPage>

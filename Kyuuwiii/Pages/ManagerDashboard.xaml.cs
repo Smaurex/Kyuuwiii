@@ -38,13 +38,13 @@ public partial class ManagerDashboard : ContentPage
 
         _courses = await DatabaseService.Instance.GetAllCoursesAsync();
 
-        // Auto-select the manager's course if possible
         if (Session.CurrentUser.course is string mc)
         {
             var idx = _courses.FindIndex(c => c.courseName == mc);
             if (idx >= 0) _selectedCourseIndex = idx;
         }
 
+        UpdateTabHighlight();
         await LoadQueue();
         StartTimer();
     }
@@ -71,7 +71,7 @@ public partial class ManagerDashboard : ContentPage
         _servingEntry = entries.FirstOrDefault(e => e.status == "serving");
         var waiting = entries.Where(e => e.status == "waiting").OrderBy(e => e.queuePosition).ToList();
 
-        // Build ViewModels — we need user names, so fetch all users
+        // fetch all users
         var allUsers = await DatabaseService.Instance.GetAllUsersAsync();
 
         MainThread.BeginInvokeOnMainThread(() =>
@@ -79,7 +79,7 @@ public partial class ManagerDashboard : ContentPage
             QueueTitleLabel.Text = $"{course.ShortName} Enrollment Queue";
             QueueLengthLabel.Text = $"{waiting.Count}";
 
-            // Now serving
+            // serving entries
             if (_servingEntry != null)
             {
                 var u = allUsers.FirstOrDefault(x => x.userId == _servingEntry.userId);
@@ -139,7 +139,30 @@ public partial class ManagerDashboard : ContentPage
         if (e.Parameter is string param && int.TryParse(param, out int idx))
         {
             _selectedCourseIndex = idx;
+            UpdateTabHighlight();
             await LoadQueue();
+        }
+    }
+
+    // istitik purposes
+    private void UpdateTabHighlight()
+    {
+        
+        var tabs = new[] { TabCS, TabIT, TabIS, TabDS };
+
+        for (int i = 0; i < tabs.Length; i++)
+        {
+            bool isSelected = i == _selectedCourseIndex;
+            tabs[i].BackgroundColor = isSelected
+                ? Color.FromArgb("#0D1B5E")   
+                : Colors.Transparent;
+
+            if (tabs[i].Content is Label lbl)
+            {
+                lbl.TextColor = isSelected
+                    ? Colors.White
+                    : Color.FromArgb("#6B7280"); 
+            }
         }
     }
 

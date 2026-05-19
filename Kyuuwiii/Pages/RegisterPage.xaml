@@ -9,7 +9,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="28,48,28,40" Spacing="0">
 
-            <!--  Logo Header  -->
+       
             <HorizontalStackLayout Margin="0,0,0,32" HorizontalOptions="Start">
                 <Border
                     Margin="0,0,10,0"
@@ -31,7 +31,7 @@
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
 
-            <!--  Card  -->
+            <!--  main card  -->
             <Border Padding="28,32" Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="0">
 
@@ -44,7 +44,7 @@
                         Style="{StaticResource SubheadingStyle}"
                         Text="Join the enrollment queue today." />
 
-                    <!--  Full Name  -->
+                    <!--  full Name  -->
                     <Label Style="{StaticResource LabelStyle}" Text="FULL NAME" />
                     <Border Style="{StaticResource InputBorderStyle}">
                         <Entry
@@ -57,7 +57,7 @@
                             VerticalOptions="Center" />
                     </Border>
 
-                    <!--  Student ID  -->
+                    <!-- student id -->
                     <Label Style="{StaticResource LabelStyle}" Text="STUDENT ID NUMBER" />
                     <Border Style="{StaticResource InputBorderStyle}">
                         <Entry
@@ -84,7 +84,7 @@
                             VerticalOptions="Center" />
                     </Border>
 
-                    <!--  Course Picker  -->
+                    <!--  course picker thing  -->
                     <Label Style="{StaticResource LabelStyle}" Text="DEPARTMENT / PROGRAM" />
                     <Border Padding="12,0" Style="{StaticResource InputBorderStyle}">
                         <Picker
@@ -104,7 +104,7 @@
                         </Picker>
                     </Border>
 
-                    <!--  Password  -->
+                    <!--  enter password  -->
                     <Label
                         Margin="0,4,0,0"
                         Style="{StaticResource LabelStyle}"
@@ -155,19 +155,21 @@
 
                 </VerticalStackLayout>
             </Border>
-
+            
+            <!-- extra terms and conditions para chuy -->
             <Label
                 Margin="0,24,0,0"
                 FontSize="11"
                 HorizontalTextAlignment="Center"
                 Text="By signing up, you agree to Kyuwii's terms of service and privacy policy for academic data handling."
                 TextColor="{StaticResource TextMuted}" />
-
+            
+            <!-- ts from the template, just decided to keep it -->
             <Label
                 Margin="0,8,0,0"
                 FontSize="11"
                 HorizontalTextAlignment="Center"
-                Text="© 2024 Kyuwii Enrollment Systems. All rights reserved."
+                Text="© 2026 Kyuwii Enrollment Systems. All rights reserved."
                 TextColor="{StaticResource TextMuted}" />
 
         </VerticalStackLayout>

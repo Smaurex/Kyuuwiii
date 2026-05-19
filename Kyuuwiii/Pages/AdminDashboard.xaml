@@ -7,7 +7,7 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <!-- Top Bar -->
+        <!-- the top bar thingy  -->
         <Border Grid.Row="0" BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
                 Padding="20,52,20,20">
             <Grid>
@@ -26,7 +26,7 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20,24" Spacing="16">
 
-                <!-- Queue Overview -->
+                <!-- overview bar for the queue -->
                 <Label Text="Enrollment Overview" Style="{StaticResource HeadingStyle}" />
                 <Label Text="Real-time management of academic enrollment flows across departments."
                        Style="{StaticResource SubheadingStyle}" Margin="0,0,0,8" />
@@ -34,19 +34,19 @@
                 <CollectionView x:Name="QueueOverviewList">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <!-- Placeholder — replaced via code -->
+                            <!--fixed na idk what was here-->
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <!-- Courses Cards -->
+                <!-- course card part -->
                 <VerticalStackLayout x:Name="CourseCardsContainer" Spacing="12" />
 
-                <!-- Users section -->
+                <!-- user management part -->
                 <Label Text="User Management" Style="{StaticResource HeadingStyle}"
                        FontSize="22" Margin="0,8,0,0" />
 
-                <!-- Search + Add -->
+                <!-- search and add users -->
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                     <Border Style="{StaticResource InputBorderStyle}" Grid.Column="0" Margin="0">
                         <Entry x:Name="SearchEntry" Placeholder="Search users…"
@@ -61,14 +61,14 @@
                             Clicked="OnAddUserClicked" />
                 </Grid>
 
-                <!-- User list -->
+                <!-- list users -->
                 <CollectionView x:Name="UserList" SelectionMode="Single"
                                 SelectionChanged="OnUserSelected">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,10">
                                 <Grid ColumnDefinitions="Auto,*,Auto">
-                                    <!-- Avatar -->
+                                    <!-- avatar placeholder (in case pfp is not implemented) -->
                                     <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceVariant}"
                                             StrokeThickness="0" HeightRequest="44" WidthRequest="44"
                                             Margin="0,0,14,0" VerticalOptions="Center">
@@ -79,7 +79,7 @@
                                                TextColor="{StaticResource Accent}" FontSize="16" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Border>
-                                    <!-- Info -->
+                                    <!-- full name, email, id -->
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label Text="{Binding FullName}"
                                                TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" />
@@ -88,7 +88,6 @@
                                         <Label Text="{Binding RoleDisplay}"
                                                TextColor="{StaticResource Accent}" FontSize="11" FontAttributes="Bold" />
                                     </VerticalStackLayout>
-                                    <!-- ID -->
                                     <Label Grid.Column="2" Text="{Binding StudentId}"
                                            TextColor="{StaticResource TextMuted}" FontSize="11"
                                            VerticalOptions="Center" />

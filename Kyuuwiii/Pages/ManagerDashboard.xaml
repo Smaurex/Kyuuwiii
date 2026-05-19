@@ -7,7 +7,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- Top Bar -->
+        <!-- top thingy -->
         <Border Grid.Row="0" BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
                 Padding="20,52,20,20">
             <Grid>
@@ -33,11 +33,11 @@
             </Grid>
         </Border>
 
-        <!-- Content -->
+        <!-- main stuffz -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20,24" Spacing="16">
 
-                <!-- Tab selector -->
+                <!-- tab selector -->
                 <Border Style="{StaticResource CardStyle}" Padding="6">
                     <Grid x:Name="TabGrid" ColumnDefinitions="*,*,*,*">
                         <Border x:Name="TabCS" Grid.Column="0" BackgroundColor="{StaticResource Primary}"
@@ -161,7 +161,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Stats row -->
+                <!-- simple stats/hard coded lollllooloolool -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="16">
                         <VerticalStackLayout>
@@ -183,7 +183,7 @@
                     </Border>
                 </Grid>
 
-                <!-- Queue list -->
+                <!-- list of queues -->
                 <Border Style="{StaticResource CardStyle}">
                     <VerticalStackLayout Spacing="0">
                         <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
@@ -204,9 +204,14 @@
                                         HeightRequest="400">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
+
+                                    <!-- each queue item 
+                                        
+                                        formatting looks good namans
+                                        
+                                    -->
                                     <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,10"
                                           RowDefinitions="Auto">
-                                        <!-- Position badge -->
                                         <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceVariant}"
                                                 StrokeThickness="0" HeightRequest="36" WidthRequest="36"
                                                 Margin="0,0,14,0" VerticalOptions="Center">
@@ -218,7 +223,6 @@
                                                    FontSize="14" FontAttributes="Bold"
                                                    HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Border>
-                                        <!-- Info -->
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                             <Label Text="{Binding StudentName}"
                                                    TextColor="{StaticResource TextPrimary}"
@@ -226,7 +230,6 @@
                                             <Label Text="{Binding Reason}"
                                                    TextColor="{StaticResource TextSecondary}" FontSize="12" />
                                         </VerticalStackLayout>
-                                        <!-- ID -->
                                         <Label Grid.Column="2" Text="{Binding StudentId}"
                                                TextColor="{StaticResource TextMuted}"
                                                FontSize="12" VerticalOptions="Center" />

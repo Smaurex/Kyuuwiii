@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Default route — always start at Login -->
+    <!-- login page daw iuna -->
     <ShellContent x:Name="LoginContent"
                   Route="LoginPage"
                   ContentTemplate="{DataTemplate pages:LoginPage}" />

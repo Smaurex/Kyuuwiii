@@ -31,7 +31,7 @@ public partial class StudentDashboard : ContentPage
         var courses = await DatabaseService.Instance.GetAllCoursesAsync();
         int total = courses.Sum(c => c.queueLength);
         TotalWaitingLabel.Text = $"{total} People";
-        AvgTimeLabel.Text = "6 Minutes"; // static estimate; replace with real calc if desired
+        AvgTimeLabel.Text = "6 Minutes"; // hardcoded lol; no idea how to do the queue time stuff
     }
 
     private async void OnJoinQueueClicked(object sender, EventArgs e)
@@ -45,7 +45,7 @@ public partial class StudentDashboard : ContentPage
             return;
         }
 
-        // Resolve courseId from user's enrolled course
+       
         var courses = await DatabaseService.Instance.GetAllCoursesAsync();
         var userCourse = courses.FirstOrDefault(c => c.courseName == Session.CurrentUser!.course);
 

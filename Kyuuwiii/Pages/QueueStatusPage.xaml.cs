@@ -60,7 +60,7 @@ public partial class QueueStatusPage : ContentPage
 
         if (_currentEntry == null)
         {
-            // Done — navigate back to dashboard
+            // if humana then navigate back to dashboard
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await DisplayAlertAsync("Queue Complete", "You have been served. Thank you!", "OK");

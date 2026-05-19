@@ -15,7 +15,6 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Register pages for DI (optional but good practice)
         builder.Services.AddTransient<Pages.LoginPage>();
         builder.Services.AddTransient<Pages.RegisterPage>();
         builder.Services.AddTransient<Pages.StudentDashboard>();

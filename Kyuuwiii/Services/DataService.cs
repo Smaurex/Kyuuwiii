@@ -38,10 +38,11 @@ namespace Kyuuwiii.Services
 
             var courses = new List<Course>
             {
-                new() { courseName = "Computer Science",      queueManager = "Dr. Aris Thorne",   courseCardCoordinator = "Dr. Aris Thorne" },
-                new() { courseName = "Information Technology",queueManager = "Prof. Sarah Jenkins",courseCardCoordinator = "Prof. Sarah Jenkins" },
-                new() { courseName = "Data Science",          queueManager = "Dr. Elena Kostic",  courseCardCoordinator = "Dr. Elena Kostic" },
-                new() { courseName = "Information Systems",   queueManager = "Markus Vane",        courseCardCoordinator = "Markus Vane" },
+                // replace them with dcism default 
+                new() { courseName = "Computer Science",      queueManager = "CISCO OFFICER 1",   courseCardCoordinator = "Mr.Archival Sebial" },
+                new() { courseName = "Information Technology",queueManager = "CISCO OFFICER 2",courseCardCoordinator = "Mr. Glenn Pepito" },
+                new() { courseName = "Data Science",          queueManager = "CISCO OFFICER 3",  courseCardCoordinator = "Dr. Katrina Fuentes" },
+                new() { courseName = "Information Systems",   queueManager = "CISCO OFFICER 4",        courseCardCoordinator = "Engr. Christian Maderazo" },
             };
             await db.InsertAllAsync(courses);
         }
@@ -50,7 +51,7 @@ namespace Kyuuwiii.Services
         {
             var admin = await db.Table<User>().Where(u => u.user_role == "admin").FirstOrDefaultAsync();
             if (admin != null) return;
-
+            // admin account
             await db.InsertAsync(new User
             {
                 firstName = "Admin",
@@ -63,7 +64,7 @@ namespace Kyuuwiii.Services
             });
         }
 
-        // ─── USER METHODS ───────────────────────────────────────────────────────
+        // USER METHODS vvv 
 
         public async Task<bool> RegisterUserAsync(User user)
         {
@@ -102,7 +103,7 @@ namespace Kyuuwiii.Services
             await db.DeleteAsync(user);
         }
 
-        // ─── COURSE METHODS ─────────────────────────────────────────────────────
+        // METHODS FOR THE COURSES vvv
 
         public async Task<List<Course>> GetAllCoursesAsync()
         {
@@ -122,17 +123,17 @@ namespace Kyuuwiii.Services
             await db.UpdateAsync(course);
         }
 
-        // ─── QUEUE METHODS ──────────────────────────────────────────────────────
+        // METHODS FOR THE QUEUES vvv
 
         public async Task<(bool success, string message)> JoinQueueAsync(int userId, int courseId, string title, string description)
         {
             var db = await GetDb();
 
-            // Guard: no double-joining
+            // code to avoid joining queue multiple times
             var active = await GetActiveEntryAsync(userId);
             if (active != null) return (false, "You already have an active queue entry.");
 
-            // Count waiters to assign position
+            // count waivers 
             var waiters = await db.Table<QueueEntry>()
                 .Where(e => e.courseId == courseId && (e.status == "waiting" || e.status == "serving"))
                 .CountAsync();
@@ -149,7 +150,7 @@ namespace Kyuuwiii.Services
             };
             await db.InsertAsync(entry);
 
-            // Update course queue length
+            // iupdate ang length ng queue sa course
             var course = await GetCourseAsync(courseId);
             if (course != null)
             {
@@ -188,7 +189,7 @@ namespace Kyuuwiii.Services
         public async Task<bool> CallNextAsync(int courseId)
         {
             var db = await GetDb();
-            // Mark any currently serving as done first
+            // reccom na code daw for serving done first
             var currentServing = await db.Table<QueueEntry>()
                 .Where(e => e.courseId == courseId && e.status == "serving")
                 .FirstOrDefaultAsync();

@@ -3,6 +3,8 @@ using Kyuuwiii.Services;
 
 namespace Kyuuwiii.Pages;
 
+// this is apparently the fix for the "SQLiteException: no such column" error when trying to bind directly to User objects in the CollectionView 
+
 // ── Fully separate ViewModel — does NOT inherit User so SQLite never touches it ──
 public class UserViewModel
 {
@@ -13,11 +15,11 @@ public class UserViewModel
     public string Course { get; set; } = "";
     public string Role { get; set; } = "";
 
-    // Display helpers
+    // helper methods for displaying stuffz
     public string Initials => FullName.Length > 0 ? FullName[0].ToString().ToUpper() : "?";
     public string RoleDisplay => Role.ToUpper();
 
-    // Convert back to a plain User for DB operations
+    // user conversion for db operations (from stackoverflow and bestfriendz lol)
     public User ToUser(string firstName, string lastName, string password) => new()
     {
         userId = UserId,
@@ -33,7 +35,7 @@ public class UserViewModel
 
 public partial class AdminDashboard : ContentPage
 {
-    // Keep the original User objects around so we can pass them to the DB without losing fields
+    // keep the original user objects para mapasa ra database unya dili mawala ang data 
     private List<User> _rawUsers = new();
     private List<UserViewModel> _allUsers = new();
 
@@ -50,6 +52,7 @@ public partial class AdminDashboard : ContentPage
         await LoadUsers();
     }
 
+    // loading course, debugged and fixed
     private async Task LoadCourses()
     {
         var courses = await DatabaseService.Instance.GetAllCoursesAsync();
@@ -121,7 +124,7 @@ public partial class AdminDashboard : ContentPage
 
     private async Task LoadUsers(string filter = "")
     {
-        // Always re-fetch raw User objects from DB
+        // reloading stuff from DB (refetch users daw)
         _rawUsers = await DatabaseService.Instance.GetAllUsersAsync();
 
         _allUsers = _rawUsers.Select(u => new UserViewModel
@@ -137,6 +140,7 @@ public partial class AdminDashboard : ContentPage
         ApplyFilter(filter);
     }
 
+    // tutorial stuffz
     private void ApplyFilter(string filter)
     {
         var filtered = string.IsNullOrWhiteSpace(filter)
@@ -147,7 +151,6 @@ public partial class AdminDashboard : ContentPage
                 u.StudentId.Contains(filter, StringComparison.OrdinalIgnoreCase)
               ).ToList();
 
-        // Null then reassign forces CollectionView to fully re-render
         UserList.ItemsSource = null;
         UserList.ItemsSource = filtered;
     }
@@ -162,7 +165,9 @@ public partial class AdminDashboard : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not UserViewModel vm) return;
         ((CollectionView)sender).SelectedItem = null;
 
-        // Find the original plain User object — never pass UserViewModel to SQLite
+        // fix summary: dont pass a userviewmodel to the action sheet, pass the original user object 
+        // instead para dili maglibog ang sqlite ug
+        // dili mawala ang data sa update/delete operations
         var original = _rawUsers.FirstOrDefault(u => u.userId == vm.UserId);
         if (original == null) return;
 
@@ -194,10 +199,10 @@ public partial class AdminDashboard : ContentPage
                 break;
 
             default:
-                return; // Cancel or dismissed — don't reload
+                return; // cancel n don't reload
         }
 
-        // Reload from DB to reflect real saved state
+        // reload from DB to reflect real saved state
         await LoadUsers(SearchEntry.Text ?? "");
     }
 
